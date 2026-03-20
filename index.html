@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Smart Lesson Reader</title>
+
+<style>
+body{
+    margin:0;
+    font-family:Arial;
+    background:#0b2a4a;
+    color:white;
+}
+
+header{
+    background:#132f4c;
+    padding:15px;
+    text-align:center;
+}
+
+.container{
+    width:90%;
+    margin:20px auto;
+}
+
+textarea{
+    width:100%;
+    height:120px;
+    padding:10px;
+    border-radius:8px;
+    border:none;
+}
+
+button{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border:none;
+    border-radius:5px;
+    background:#1abc9c;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.output{
+    background:#132f4c;
+    padding:15px;
+    border-radius:10px;
+    margin-top:20px;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h2>📘 Smart Lesson Reader (AI Style)</h2>
+</header>
+
+<div class="container">
+
+<h3>📄 Paste or Type Lesson Text</h3>
+<textarea id="lessonText" placeholder="Paste highlighted passage here..."></textarea>
+
+<button onclick="generateQuestions()">⚡ Generate Questions</button>
+
+<div class="output" id="result"></div>
+
+</div>
+
+<script>
+
+function generateQuestions(){
+
+    let text = document.getElementById("lessonText").value;
+
+    if(text.length < 20){
+        alert("Please enter more text!");
+        return;
+    }
+
+    let words = text.split(" ");
+
+    // Pick random word for fill blank
+    let randomWord = words[Math.floor(Math.random() * words.length)];
+
+    // Create Fill in blank
+    let fillBlank = text.replace(randomWord, "_______");
+
+    // True/False (simple logic)
+    let tfStatement = text.split(".")[0];
+
+    // MCQ options
+    let options = [
+        randomWord,
+        words[Math.floor(Math.random() * words.length)],
+        words[Math.floor(Math.random() * words.length)]
+    ];
+
+    let output = `
+    <h3>📝 Generated Questions</h3>
+
+    <p><b>1. Fill in the blank:</b><br>${fillBlank}</p>
+
+    <p><b>2. True or False:</b><br>${tfStatement}</p>
+
+    <p><b>3. Choose the correct answer:</b><br>
+    What is a key word from the passage?</p>
+
+    <ul>
+        <li>${options[0]}</li>
+        <li>${options[1]}</li>
+        <li>${options[2]}</li>
+    </ul>
+    `;
+
+    document.getElementById("result").innerHTML = output;
+}
+
+</script>
+
+</body>
+</html>
